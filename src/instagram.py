@@ -5,14 +5,26 @@ from time import sleep
 from openpyxl import Workbook
 import os
 import platform, urllib.request, openpyxl, operator
-# import getpass
+import getpass
 
 class Instagram:
-    def __init__(self,tag,limit):
+    def __init__(self,tag,limit,usrname,password):
         self.tag        = tag
         self.limit      = limit
+        self.username   = usrname
+        self.password   = password
         self.url        = "https://www.instagram.com"
         self.driver     = webdriver.Chrome(executable_path="/home/local/DEVNET/boskicl/scrapper/src/chromedriver") # path to chromedriver
+
+    def login(self):
+        driver = self.driver
+        driver.get('{}/accounts/login/'.format(self.url))
+        sleep(1)
+        driver.find_element_by_name('username').send_keys(self.username)
+        driver.find_element_by_name('password').send_keys(self.password + Keys.RETURN)
+        sleep(1)
+        driver.find_element_by_xpath('//button[text()="Not Now"]').click()
+        sleep(1)
 
     def create_dir(self, dirname):
         if os.path.exists("data") and os.path.exists("data/data_" + dirname) and os.path.exists("data/data_" + dirname + '/img'):       # If path exists = pass
@@ -46,6 +58,7 @@ class Instagram:
                 print("Unable to create data/data_{0}/img directory: Directory already exists.".format(dirname))
 
     def Tag_Scrapper(self):
+        login       = self.login()
         directory   = self.create_dir(self.tag)                                 # Create directory with hashtag
         driver = self.driver
         driver.get('{0}/explore/tags/{1}'.format(self.url,self.tag))
@@ -62,9 +75,9 @@ class Instagram:
         actions.send_keys(Keys.SPACE).perform()
         sleep(0.5)
         actions.send_keys(Keys.SPACE).perform()
-        # sleep(0.5)
+        sleep(0.5)
         actions.send_keys(Keys.SPACE).perform()
-        # sleep(0.5)
+        sleep(0.5)
         actions.send_keys(Keys.SPACE).perform()
         sleep(0.5)
 
@@ -151,5 +164,5 @@ class Instagram:
         driver.quit()
 
 ## Testing uncomment for only that part
-# insta = Instagram('tree',1)
-# insta.Tag_Scrapper()
+insta = Instagram('tree',1)
+insta.Tag_Scrapper()
