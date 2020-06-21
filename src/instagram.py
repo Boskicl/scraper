@@ -12,7 +12,7 @@ class Instagram:
         self.tag        = tag
         self.limit      = limit
         self.url        = "https://www.instagram.com"
-        self.driver     = webdriver.Chrome(executable_path="/home/local/DEVNET/boskicl/scripts/data_scrapper/src/chromedriver") # path to chromedriver
+        self.driver     = webdriver.Chrome(executable_path="/home/local/DEVNET/boskicl/scrapper/src/chromedriver") # path to chromedriver
 
     def create_dir(self, dirname):
         if os.path.exists("data") and os.path.exists("data/data_" + dirname) and os.path.exists("data/data_" + dirname + '/img'):       # If path exists = pass
@@ -44,24 +44,6 @@ class Instagram:
                     print("Unable to create data/data_{0}/img directory: Directory already exists.".format(dirname))
             else:
                 print("Unable to create data/data_{0}/img directory: Directory already exists.".format(dirname))
-
-    # def excel_exporter(self,names, comments, file_path):
-    #     fp = file_path
-    #     tag_File = fp + "/" + self.tag + "_Instagram.xlsx"
-    #     temp = {}
-    #     temp_names = []
-    #     temp_comments = []
-    #     if os.path.isfile(fname):
-    #         saved = pd.read_excel(fname)
-    #         temp_names.extend(saved['name'])
-    #         temp_comments.extend(saved['comment'])
-    #     temp_names.extend(names)
-    #     temp_comments.extend(comments)
-    #     temp.update({'name': temp_names, 'comment': temp_comments})
-    #     df = pd.DataFrame(temp)
-    #     writer = ExcelWriter(fname)
-    #     df.to_excel(writer, 'ridwan kamil', index=False)
-    #     writer.save()
 
     def Tag_Scrapper(self):
         directory   = self.create_dir(self.tag)                                 # Create directory with hashtag
@@ -137,7 +119,6 @@ class Instagram:
                 hashtags.append(cleaned)
             else:
                 pass
-                # hashtags[cleaned] = 1
                 # if cleaned in hashtags and len(cleaned) < 100:
                 #     hashtags[cleaned] = 1
                 # if cleaned not in hashtags and len(cleaned) < 100:
@@ -146,7 +127,6 @@ class Instagram:
                 #     hashtags[cleaned] = hashtags[cleaned] + 1
         # sort hashtags with frequencies and store them in excel
         #hashtags = sorted(hashtags.items(), key=operator.itemgetter(1), reverse=True)
-        #hashtags = hashtags.items()
         # Column 2 and 3
         tagName = 'B'
         #tagFreq = 'C'
@@ -154,7 +134,7 @@ class Instagram:
         for ntag in hashtags:
             print(ntag)
             ws_Caption_Tag[tagName + str(row)] = ntag
-            #ws_Caption_Tag[tagFreq + str(row)] = ntag[1]
+            #ws_Caption_Tag[tagFreq + str(row)] = ntag[1] # For frequencies
             row += 1
 
         wb.save(tag_File)

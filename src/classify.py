@@ -3,12 +3,13 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.xception import decode_predictions
 import requests
+import os
 import glob
 
 class classify:
     def __init__(self,folder):
         self.folder     = folder
-        self.path       = '/home/local/DEVNET/boskicl/scripts/data_scrapper/data/data_' + self.folder + '/img/*.jpg'
+        self.path       = os.path.join(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'), 'data/data_'+self.folder+'/img/*.jpg')
     def process(self):
         model = tf.keras.applications.Xception(
             include_top=True,
@@ -40,5 +41,5 @@ class classify:
             print('Prediction of : ' + start + '{0}'.format(decode[0][0][1]) + end + ' for image : ' + start + '{0}'.format(images.strip(self.path)) + end + ' with confidence : ' + start + '{0}'.format(decode[0][0][2]) + end)
 
 # ## Testing uncomment for only that part
-classes = classify('tree')
-classes.process()
+# classes = classify('dog')
+# classes.process()

@@ -1,6 +1,6 @@
 #from src.twitter import Twitter        # Import Class: Twitter
 from src.instagram import Instagram     # Import Class: Instagram
-#from src.classify import classify       # Import Class: classify
+from src.classify import classify       # Import Class: classify
 
 if __name__ == '__main__':
     print("Starting Social Media Scrapper...")
@@ -9,6 +9,6 @@ if __name__ == '__main__':
     insta = Instagram(insta_tag,num_pics)
     print("Starting Instagram Scrapper")
     insta.Tag_Scrapper()
-    # print("Starting Classification of Images")
-    # classify = classify(insta_tag)
-    # classify.process()
+    print("Starting Classification of Images")
+    classify = classify(insta_tag)
+    classify.process()
