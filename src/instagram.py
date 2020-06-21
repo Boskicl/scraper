@@ -164,5 +164,10 @@ class Instagram:
         driver.quit()
 
 ## Testing uncomment for only that part
-insta = Instagram('tree',1)
-insta.Tag_Scrapper()
+if __name__ == '__main__':
+    insta_tag = str(input('What hastag would you like to search for: '))
+    num_pics  = int(input('Number of pictures you would like to search (int):  '))
+    usr = str(input('What is your Instagram username? (case sensitive): '))
+    paswrd = getpass.getpass(prompt='What is your Instagram password (case sensitive): ', stream=None)
+    insta = Instagram(insta_tag,num_pics,usr,paswrd)
+    insta.Tag_Scrapper()
